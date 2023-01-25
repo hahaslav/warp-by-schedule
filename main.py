@@ -29,11 +29,26 @@ def parse_time(schedule):
         el[FIELD_UNTIL] = time.strptime(el[FIELD_UNTIL], "%H:%M")
 
 
+def sort_by_time(schedule):
+    """
+    Sorts the items in the schedule so the later items will be first
+    """
+    changed = True
+
+    while changed:
+        changed = False
+        for i in range(len(schedule) - 1):
+            if schedule[i][FIELD_UNTIL] < schedule[i + 1][FIELD_UNTIL]:
+                schedule[i], schedule[i + 1] = schedule[i + 1], schedule[i]
+                changed = True
+
+
 def main():
     start_date, schedule = load_file()
     day_of_week = get_today_day_of_week()
     today_schedule = schedule[day_of_week]
     parse_time(today_schedule)
+    sort_by_time(today_schedule)
 
 
 if __name__ == '__main__':
