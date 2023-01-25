@@ -66,14 +66,25 @@ def find_nearest_item(schedule, target_time: time.struct_time):
     return result
 
 
+def exit_if_none(obj, reason):
+    """
+    Checks if the obj is None, prints reason and stops execution
+    """
+    if obj is None:
+        print(reason)
+        exit(0)
+
+
 def main():
     start_date, schedule = load_file()
     day_of_week = get_today_day_of_week()
     today_schedule = schedule[day_of_week]
+
     parse_time(today_schedule)
     sort_by_time(today_schedule)
 
     nearest_item = find_nearest_item(today_schedule, get_current_time())
+    exit_if_none(nearest_item, "No scheduled items left for today.")
     print(nearest_item[FIELD_NAME])
 
 
