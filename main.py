@@ -18,7 +18,7 @@ def get_today_day_of_week():
     """
     Returns the number of today's day of the week in str
     """
-    return str(time.localtime()[6])
+    return str(time.localtime().tm_wday)
 
 
 def parse_time(schedule):
