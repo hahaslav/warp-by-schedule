@@ -19,6 +19,10 @@ def get_today_day_of_week():
     return str(time.localtime()[6])
 
 
-if __name__ == '__main__':
+def main():
     start_date, schedule = load_file()
     day_of_week = get_today_day_of_week()
+
+
+if __name__ == '__main__':
+    main()
