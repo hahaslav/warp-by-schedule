@@ -1,6 +1,8 @@
 import json
 import time
 
+FIELD_UNTIL = "until"
+
 
 def load_file():
     """
@@ -19,9 +21,19 @@ def get_today_day_of_week():
     return str(time.localtime()[6])
 
 
+def parse_time(schedule):
+    """
+    Converts human time into time.struct_time for easy sorting
+    """
+    for el in schedule:
+        el[FIELD_UNTIL] = time.strptime(el[FIELD_UNTIL], "%H:%M")
+
+
 def main():
     start_date, schedule = load_file()
     day_of_week = get_today_day_of_week()
+    today_schedule = schedule[day_of_week]
+    parse_time(today_schedule)
 
 
 if __name__ == '__main__':
