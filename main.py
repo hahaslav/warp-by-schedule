@@ -48,6 +48,15 @@ def get_today_week_number(start_date: int) -> int:
     return day_in_cycle // days_in_week
 
 
+def check_day_existence(schedule: fullScheduleFormat, day_of_week: str):
+    """
+    Stops execution if the today's day of week does not exist it the schedule
+    """
+    if day_of_week not in schedule.keys():
+        print("There is no schedule for today")
+        exit(0)
+
+
 def parse_time(schedule: dayScheduleFormat):
     """
     Converts human time into time.struct_time for easy sorting
@@ -109,6 +118,7 @@ def main():
     start_date, schedule = load_file()
     day_of_week = get_today_day_of_week()
     week_number = get_today_week_number(start_date)
+    check_day_existence(schedule, day_of_week)
     today_schedule = schedule[day_of_week]
 
     parse_time(today_schedule)
