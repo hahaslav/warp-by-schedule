@@ -7,6 +7,7 @@ dayScheduleFormat = list[itemFormat]
 fullScheduleFormat = dict[str, dayScheduleFormat]
 
 TIME_FORMAT = "%H:%M"
+FIELD_START_DATE = "start_date"
 FIELD_UNTIL = "until"
 FIELD_NAME = "name"
 FIELD_URL = "url"
@@ -18,9 +19,12 @@ def load_file() -> tuple[int, fullScheduleFormat]:
     Returns deserialized JSON with schedule
     """
     with open("schedule.json", 'r', encoding="UTF-8") as fin:
-        file_data = load_json(fin)
+        file_data: dict[str, int | fullScheduleFormat] = load_json(fin)
 
-    start_date: int = file_data["start_date"]
+    if FIELD_START_DATE in file_data.keys():
+        start_date: int = file_data[FIELD_START_DATE]
+    else:
+        start_date = 0
     schedule: fullScheduleFormat = file_data["schedule"]
 
     return start_date, schedule
