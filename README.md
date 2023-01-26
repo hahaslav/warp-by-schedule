@@ -19,6 +19,7 @@ Those features may be added in the future, if somebody would like to do it.
 
 * Use schedule file located elsewhere and named anylike. *As I see it, the path to the file could be either asked from the user of accepted as an startup argument (ex. `$ main.py -f C:\Users\admin\Downloads\1-A.json`)*  
 * Visual schedule editor
+* Add unit tests
 * Automatic URL fetching from RSS feed or an online messaging app
 * Automate URL opening. *But there is already a Task Scheduler on Windows*
 * Desktop executable or smartphone app. *I guess, it should be another project*
