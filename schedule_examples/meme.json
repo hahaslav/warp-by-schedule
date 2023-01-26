@@ -1,0 +1,90 @@
+{
+  "start_date": 2,
+  "schedule": {
+    "0": [
+      {
+        "name": "Good Morning!",
+        "until": "06:00",
+        "url": "https://www.youtube.com/watch?v=OrPKJos3tA0"
+      },
+      {
+        "name": "Horizontally Spinning Rat",
+        "until": "14:00",
+        "url": "https://www.youtube.com/watch?v=3X-iqFRGqbc"
+      },
+      {
+        "name": "Floppa goes Around the World",
+        "until": "21:00",
+        "url": "https://www.youtube.com/watch?v=BiEzR5ymSg4"
+      }
+    ],
+    "1": [
+      {
+        "name": "funny head xd",
+        "week": 0,
+        "until": "14:00",
+        "url": "https://www.youtube.com/watch?v=jeM9yRJwKl8"
+      },
+      {
+        "name": "Man has lost his sanity",
+        "week": 1,
+        "until": "14:00",
+        "url": "https://www.youtube.com/shorts/WiGM7D2wZlI"
+      },
+      {
+        "name": "Don't open this link",
+        "until": "21:45",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      }
+    ],
+    "2": [
+      {
+        "name": "It works only once per two weeks",
+        "until": "23:59",
+        "week": 1,
+        "url": "https://i.kym-cdn.com/photos/images/original/001/722/871/632.jpg"
+      }
+    ],
+    "4": [
+      {
+        "name": "Let's scare C++ developers",
+        "until": "14:15",
+        "url": "https://www.youtube.com/watch?v=MHBG_R_dhwk"
+      },
+      {
+        "name": "Idk how to continue this schedule",
+        "until": "18:30",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      },
+      {
+        "name": "So, I'll just copy-paste the same link",
+        "until": "22:44",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      }
+    ],
+    "5": [
+      {
+        "name": "Feel free to fork this repository...",
+        "until": "00:20",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      },
+      {
+        "name": "...and continue this schedule",
+        "until": "04:00",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      },
+      {
+        "name": "...and then open pull request",
+        "until": "13:55",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      }
+    ],
+    "6": [
+      {
+        "name": "The End.",
+        "until": "23:59",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      }
+    ]
+  }
+}
