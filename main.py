@@ -2,6 +2,10 @@ from webbrowser import open as open_in_browser
 from json import load as load_json
 import time
 
+itemFormat = dict[str, str | int]
+dayScheduleFormat = list[itemFormat]
+fullScheduleFormat = dict[str, dayScheduleFormat]
+
 TIME_FORMAT = "%H:%M"
 FIELD_UNTIL = "until"
 FIELD_NAME = "name"
@@ -9,24 +13,27 @@ FIELD_URL = "url"
 FIELD_WEEK = "week"
 
 
-def load_file():
+def load_file() -> tuple[int, fullScheduleFormat]:
     """
     Returns deserialized JSON with schedule
     """
     with open("schedule.json", 'r', encoding="UTF-8") as fin:
         file_data = load_json(fin)
 
-    return file_data["start_date"], file_data["schedule"]
+    start_date: int = file_data["start_date"]
+    schedule: fullScheduleFormat = file_data["schedule"]
+
+    return start_date, schedule
 
 
-def get_today_day_of_week():
+def get_today_day_of_week() -> str:
     """
     Returns the number of today's day of the week in str
     """
     return str(time.localtime().tm_wday)
 
 
-def get_today_week_number(start_date):
+def get_today_week_number(start_date: int) -> int:
     """
     Returns the number of today's week
     """
@@ -37,7 +44,7 @@ def get_today_week_number(start_date):
     return day_in_cycle // days_in_week
 
 
-def parse_time(schedule):
+def parse_time(schedule: dayScheduleFormat):
     """
     Converts human time into time.struct_time for easy sorting
     """
@@ -45,7 +52,7 @@ def parse_time(schedule):
         el[FIELD_UNTIL] = time.strptime(el[FIELD_UNTIL], TIME_FORMAT)
 
 
-def sort_by_time(schedule):
+def sort_by_time(schedule: dayScheduleFormat):
     """
     Sorts the items in the schedule so the later items will be first
     """
@@ -59,14 +66,26 @@ def sort_by_time(schedule):
                 changed = True
 
 
-def get_current_time():
+def get_current_time() -> time.struct_time:
     """
     Returns current time, ignoring the current day and year
     """
     return time.strptime(time.strftime(TIME_FORMAT, time.localtime()), TIME_FORMAT)
 
 
-def find_nearest_item(schedule, target_time: time.struct_time, week_number):
+def exit_if_none(obj, reason: str):
+    """
+    Checks if the obj is None, prints reason and stops execution
+    """
+    if obj is None:
+        print(reason)
+        exit(0)
+
+
+def find_nearest_item(
+        schedule: dayScheduleFormat,
+        target_time: time.struct_time,
+        week_number: int) -> itemFormat:
     """
     Returns the nearest item to the given time
     """
@@ -78,16 +97,8 @@ def find_nearest_item(schedule, target_time: time.struct_time, week_number):
         if target_time < el[FIELD_UNTIL]:
             result = el
 
+    exit_if_none(result, "No scheduled items left for today.")
     return result
-
-
-def exit_if_none(obj, reason):
-    """
-    Checks if the obj is None, prints reason and stops execution
-    """
-    if obj is None:
-        print(reason)
-        exit(0)
 
 
 def main():
@@ -100,7 +111,6 @@ def main():
     sort_by_time(today_schedule)
 
     nearest_item = find_nearest_item(today_schedule, get_current_time(), week_number)
-    exit_if_none(nearest_item, "No scheduled items left for today.")
     print(nearest_item[FIELD_NAME])
     open_in_browser(nearest_item[FIELD_URL])
 
