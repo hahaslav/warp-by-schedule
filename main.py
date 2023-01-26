@@ -5,6 +5,7 @@ TIME_FORMAT = "%H:%M"
 FIELD_UNTIL = "until"
 FIELD_NAME = "name"
 FIELD_URL = "url"
+FIELD_WEEK = "week"
 
 
 def load_file():
@@ -22,6 +23,17 @@ def get_today_day_of_week():
     Returns the number of today's day of the week in str
     """
     return str(time.localtime().tm_wday)
+
+
+def get_today_week_number(start_date):
+    """
+    Returns the number of today's week
+    """
+    days_in_week = 7
+    weeks_in_cycle = 2
+    days_since_start = time.localtime().tm_yday - start_date
+    day_in_cycle = days_since_start % (days_in_week * weeks_in_cycle)
+    return day_in_cycle // days_in_week
 
 
 def parse_time(schedule):
@@ -53,13 +65,15 @@ def get_current_time():
     return time.strptime(time.strftime(TIME_FORMAT, time.localtime()), TIME_FORMAT)
 
 
-def find_nearest_item(schedule, target_time: time.struct_time):
+def find_nearest_item(schedule, target_time: time.struct_time, week_number):
     """
     Returns the nearest item to the given time
     """
     result = None
 
     for el in schedule:
+        if FIELD_WEEK in el.keys() and el[FIELD_WEEK] != week_number:
+            continue
         if target_time < el[FIELD_UNTIL]:
             result = el
 
@@ -78,12 +92,13 @@ def exit_if_none(obj, reason):
 def main():
     start_date, schedule = load_file()
     day_of_week = get_today_day_of_week()
+    week_number = get_today_week_number(start_date)
     today_schedule = schedule[day_of_week]
 
     parse_time(today_schedule)
     sort_by_time(today_schedule)
 
-    nearest_item = find_nearest_item(today_schedule, get_current_time())
+    nearest_item = find_nearest_item(today_schedule, get_current_time(), week_number)
     exit_if_none(nearest_item, "No scheduled items left for today.")
     print(nearest_item[FIELD_NAME])
 
