@@ -1,4 +1,5 @@
-import json
+from webbrowser import open as open_in_browser
+from json import load as load_json
 import time
 
 TIME_FORMAT = "%H:%M"
@@ -13,7 +14,7 @@ def load_file():
     Returns deserialized JSON with schedule
     """
     with open("schedule.json", 'r', encoding="UTF-8") as fin:
-        file_data = json.load(fin)
+        file_data = load_json(fin)
 
     return file_data["start_date"], file_data["schedule"]
 
@@ -101,6 +102,7 @@ def main():
     nearest_item = find_nearest_item(today_schedule, get_current_time(), week_number)
     exit_if_none(nearest_item, "No scheduled items left for today.")
     print(nearest_item[FIELD_NAME])
+    open_in_browser(nearest_item[FIELD_URL])
 
 
 if __name__ == '__main__':
