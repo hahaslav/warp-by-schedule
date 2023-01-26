@@ -1,3 +1,7 @@
+# Before running the script, rename the file to `schedule.json`!
+
+---
+
 # About the structure of the schedule JSON file
 
 The root object starts with "**start_date**" that equals to the `time.struct_time.tm_yday` of the first day of the week (ex. Monday) of the first week. Its purpose is to get the current number of the week, if the schedule has items that occur only once per two weeks. If you have the same schedule every week, you can skip this pair.
