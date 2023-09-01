@@ -1,6 +1,7 @@
 from webbrowser import open as open_in_browser
 from json import load as load_json
 import time
+import re
 
 itemFormat = dict[str, str | int]
 dayScheduleFormat = list[itemFormat]
@@ -114,6 +115,33 @@ def find_nearest_item(
     return result
 
 
+def parse_zoom_url(url: str) -> tuple | None:
+    """
+    If the given url is used to connect to a zoom meeting
+    then returns the meeting's id and password.
+    Else, returns None, None
+    """
+    match = re.fullmatch(r"https://us.+web.zoom.us/j/(.+)\?pwd=(.+)", url)
+
+    if match is None:
+        return None, None
+
+    return match.group(1), match.group(2)
+
+
+def rewrite_zoom_url(item: itemFormat) -> itemFormat:
+    """
+    Rewrites zoom url to zoomus:// format to open the Zoom meeting directly
+    Doesn't touch url if it leads to another service
+    """
+    zoom_id, zoom_password = parse_zoom_url(item[FIELD_URL])
+    if zoom_id is None:
+        return item
+
+    item[FIELD_URL] = f"zoomus://join?action=join&confno={zoom_id}&pwd={zoom_password}"
+    return item
+
+
 def main():
     start_date, schedule = load_file()
     day_of_week = get_today_day_of_week()
@@ -125,6 +153,7 @@ def main():
     sort_by_time(today_schedule)
 
     nearest_item = find_nearest_item(today_schedule, get_current_time(), week_number)
+    nearest_item = rewrite_zoom_url(nearest_item)
     print(nearest_item[FIELD_NAME])
     open_in_browser(nearest_item[FIELD_URL])
 
