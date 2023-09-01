@@ -6,6 +6,7 @@ The original purpose of the script was to semi-automate the process of searching
 
 ## Features
 * The schedule can have items that occurs once per two weeks
+* HTTPS links to Zoom meetings are automatically converted into `zoomus://` URL scheme, so you are immediately connected to the meeting.
 
 ## Usage
 
