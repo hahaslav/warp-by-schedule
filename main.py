@@ -121,7 +121,7 @@ def parse_zoom_url(url: str) -> tuple | None:
     then returns the meeting's id and password.
     Else, returns None, None
     """
-    match = re.fullmatch(r"https://.*\.zoom\.us/j/(.+)\?pwd=(.+)", url)
+    match = re.fullmatch(r"https://.*\.?zoom\.us/j/(.+)\?pwd=(.+)", url)
 
     if match is None:
         return None, None
