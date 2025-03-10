@@ -121,7 +121,7 @@ def parse_zoom_url(url: str) -> tuple | None:
     then returns the meeting's id and password.
     Else, returns None, None
     """
-    match = re.fullmatch(r"https://.*\.?zoom\.us/j/(.+)\?pwd=(.+)", url)
+    match = re.fullmatch(r"https://.*\.?zoom\.us/j/(\d+)(?:\?pwd=(.+))?", url)
 
     if match is None:
         return None, None
@@ -137,8 +137,10 @@ def rewrite_zoom_url(item: itemFormat) -> itemFormat:
     zoom_id, zoom_password = parse_zoom_url(item[FIELD_URL])
     if zoom_id is None:
         return item
-
-    item[FIELD_URL] = f"zoomus://join?action=join&confno={zoom_id}&pwd={zoom_password}"
+    
+    item[FIELD_URL] = f"zoomus://join?action=join&confno={zoom_id}"
+    if zoom_password is not None:
+        item[FIELD_URL] += f"&pwd={zoom_password}"
     return item
 
 
